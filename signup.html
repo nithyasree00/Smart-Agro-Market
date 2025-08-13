@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Signup — Smart Agro Market</title>
+<style>
+  :root{--accent:#4CAF50;--accent-dark:#388e3c}
+  body{font-family:Georgia,serif;margin:0;background:#f2f4f6;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:28px;}
+  h1 {
+  color: #4CAF50;  /* green */
+  margin: 0 0 18px;
+}
+
+  .role-buttons{display:flex;gap:16px;margin-bottom:20px}
+  .btn {
+      background-color: #ffffff;
+      color: rgb(27, 175, 35);
+      padding: 14px 28px;
+      margin: 10px;
+      border: none;
+      cursor: pointer;
+      border-radius: 8px;
+      font-size: 16px;
+      text-decoration: none;
+      display: inline-block;
+      font-family:Georgia,serif;
+    }
+
+    .btn:hover {
+      background-color: rgb(27, 175, 35);
+      color:#ffffff;
+    }
+  .role-btn:hover{background:var(--accent-dark);transform:translateY(-3px)}
+  .role-btn.active{background:var(--accent-dark);outline:3px solid rgba(105, 212, 47, 0.03)}
+  .card{background:#fff;border-radius:12px;padding:18px;width:420px;box-shadow:0 8px 22px rgba(0,0,0,0.08);text-align:left}
+  label{display:block;margin-top:10px;font-size:13px;color:#333;font-weight:600}
+  input,select,textarea,button{width:100%;box-sizing:border-box;margin-top:6px;padding:10px;border-radius:8px;border:1px solid #d0d7d0;font-size:14px}
+  textarea{min-height:68px;resize:vertical}
+  .note{font-size:13px;color:#666;margin-top:8px}
+  .error{color:#b42318;font-size:13px;margin-top:8px}
+  .success{color:#0b6b23;font-size:13px;margin-top:8px}
+  button{background:var(--accent);color:#fff;border:none;margin-top:14px;cursor:pointer;font-weight:600}
+  button:hover{background:var(--accent-dark)}
+  .hidden{display:none}
+  @media(max-width:480px){.card{width:92%}}
+</style>
+</head>
+<body>
+  <h1>Signup</h1>
+
+  <!-- role buttons (style matches login page) -->
+  <div class="role-buttons" role="tablist" aria-label="Choose role">
+    <button class="btn" data-role="farmer" id="btn-farmer">Farmer</button>
+    <button class="btn" data-role="customer" id="btn-customer">Customer</button>
+    <button class="btn" data-role="delivery" id="btn-delivery">Delivery Person</button>
+  </div>
+
+  <!-- form card area -->
+  <div class="card" id="form-area">
+    <p class="note" id="choose-note">Select a role above to open its signup form.</p>
+
+    <!-- Farmer form -->
+    <form id="farmer-form" class="hidden" novalidate>
+      <label for="farmer-name">Name</label>
+      <input id="farmer-name" type="text" inputmode="text" placeholder="Full name" required>
+
+      <label for="farmer-mobile">Mobile (10 digits)</label>
+      <input id="farmer-mobile" type="tel" inputmode="numeric" placeholder="e.g. 98xxxxxxxx" maxlength="10" required>
+
+      <label for="farmer-village">Village</label>
+      <input id="farmer-village" type="text" placeholder="Village" required>
+
+      <label for="farmer-address">Address</label>
+      <textarea id="farmer-address" placeholder="Address (any characters allowed)" required></textarea>
+
+      <label for="farmer-category">Category</label>
+      <select id="farmer-category" required>
+        <option value="">-- Select Category --</option>
+        <option value="Farming">Farming</option>
+        <option value="Milk supply">Milk supply</option>
+        <option value="Farming+Milk supply">Farming + Milk supply</option>
+      </select>
+
+      <div class="error" id="farmer-error" aria-live="polite"></div>
+      <div class="success" id="farmer-success" aria-live="polite"></div>
+      <button type="submit">Create Farmer Account</button>
+    </form>
+
+    <!-- Customer form -->
+    <form id="customer-form" class="hidden" novalidate>
+      <label for="customer-name">Name</label>
+      <input id="customer-name" type="text" placeholder="Full name" required>
+
+      <label for="customer-mobile">Mobile (10 digits)</label>
+      <input id="customer-mobile" type="tel" inputmode="numeric" placeholder="e.g. 98xxxxxxxx" maxlength="10" required>
+
+      <label for="customer-village">Village</label>
+      <input id="customer-village" type="text" placeholder="Village" required>
+
+      <label for="customer-address">Address</label>
+      <textarea id="customer-address" placeholder="Address (any characters allowed)" required></textarea>
+
+      <div class="error" id="customer-error" aria-live="polite"></div>
+      <div class="success" id="customer-success" aria-live="polite"></div>
+      <button type="submit">Create Customer Account</button>
+    </form>
+
+    <!-- Delivery form -->
+    <form id="delivery-form" class="hidden" novalidate>
+      <label for="delivery-name">Name</label>
+      <input id="delivery-name" type="text" placeholder="Full name" required>
+
+      <label for="delivery-mobile">Mobile (10 digits)</label>
+      <input id="delivery-mobile" type="tel" inputmode="numeric" placeholder="e.g. 98xxxxxxxx" maxlength="10" required>
+
+      <label for="delivery-village">Village</label>
+      <input id="delivery-village" type="text" placeholder="Village" required>
+
+      <label for="delivery-address">Address</label>
+      <textarea id="delivery-address" placeholder="Address (any characters allowed)" required></textarea>
+
+      <div class="error" id="delivery-error" aria-live="polite"></div>
+      <div class="success" id="delivery-success" aria-live="polite"></div>
+      <button type="submit">Create Delivery Account</button>
+    </form>
+  </div>
+
+<script>
+/* Shared rules */
+const nameRe = /^[A-Za-z ]+$/;
+const villageRe = /^[A-Za-z ]+$/;
+const mobileRe = /^[6-9]\d{9}$/; // Indian mobile
+
+// helpers
+function show(el){ el.classList.remove('hidden'); }
+function hide(el){ el.classList.add('hidden'); }
+function setActiveButton(role){
+  document.querySelectorAll('.role-btn').forEach(b => b.classList.toggle('active', b.dataset.role===role));
+}
+
+/* show only selected form */
+function openRole(role){
+  setActiveButton(role);
+  // hide all
+  ['farmer','customer','delivery'].forEach(r => hide(document.getElementById(r + '-form')));
+  document.getElementById('choose-note').style.display = 'none';
+  show(document.getElementById(role + '-form'));
+}
+
+// wire buttons
+document.getElementById('btn-farmer').addEventListener('click', ()=> openRole('farmer'));
+document.getElementById('btn-customer').addEventListener('click', ()=> openRole('customer'));
+document.getElementById('btn-delivery').addEventListener('click', ()=> openRole('delivery'));
+
+// live input sanitizers and maxlength enforcement
+function attachSanitizers(role){
+  const name = document.getElementById(`${role}-name`);
+  const mobile = document.getElementById(`${role}-mobile`);
+  const village = document.getElementById(`${role}-village`);
+
+  // Allow letters & spaces only for name and village
+  if(name){
+    name.addEventListener('input', ()=> { name.value = name.value.replace(/[^A-Za-z\s]/g,''); });
+  }
+  if(village){
+    village.addEventListener('input', ()=> { village.value = village.value.replace(/[^A-Za-z\s]/g,''); });
+  }
+
+  // Mobile: digits only, max 10
+  if(mobile){
+    mobile.addEventListener('input', ()=> {
+      mobile.value = mobile.value.replace(/\D/g,'').slice(0,10);
+    });
+  }
+}
+['farmer','customer','delivery'].forEach(attachSanitizers);
+
+/* Validation on submit */
+function handleSignup(e, role){
+  e.preventDefault();
+  const form = e.target;
+  const name = form.querySelector(`#${role}-name`).value.trim();
+  const mobile = form.querySelector(`#${role}-mobile`).value.trim();
+  const village = form.querySelector(`#${role}-village`).value.trim();
+  const address = form.querySelector(`#${role}-address`).value.trim();
+  const errorDiv = document.getElementById(`${role}-error`);
+  const successDiv = document.getElementById(`${role}-success`);
+  errorDiv.textContent = '';
+  successDiv.textContent = '';
+
+  if(!nameRe.test(name)){
+    errorDiv.textContent = 'Name must contain only letters and spaces.';
+    form.querySelector(`#${role}-name`).focus();
+    return false;
+  }
+  if(!mobileRe.test(mobile)){
+    errorDiv.textContent = 'Mobile must be 10 digits and start with 6/7/8/9.';
+    form.querySelector(`#${role}-mobile`).focus();
+    return false;
+  }
+  if(!villageRe.test(village)){
+    errorDiv.textContent = 'Village must contain only letters and spaces.';
+    form.querySelector(`#${role}-village`).focus();
+    return false;
+  }
+  if(!address || address.length===0){
+    errorDiv.textContent = 'Address cannot be empty.';
+    form.querySelector(`#${role}-address`).focus();
+    return false;
+  }
+
+  // Farmer needs category
+  if(role==='farmer'){
+    const cat = document.getElementById('farmer-category').value;
+    if(!cat){
+      errorDiv.textContent = 'Please select a category.';
+      document.getElementById('farmer-category').focus();
+      return false;
+    }
+  }
+
+  // success — simulate account creation; clear form and show success
+  successDiv.textContent = 'Account created successfully (simulated).';
+  form.reset();
+  setTimeout(()=> successDiv.textContent = '', 2500);
+  return false; // prevent actual submit since no backend here
+}
+
+// attach submit listeners
+document.getElementById('farmer-form').addEventListener('submit', (e)=> handleSignup(e,'farmer'));
+document.getElementById('customer-form').addEventListener('submit', (e)=> handleSignup(e,'customer'));
+document.getElementById('delivery-form').addEventListener('submit', (e)=> handleSignup(e,'delivery'));
+
+// Start with no form shown (user chooses)
+</script>
+</body>
+</html>

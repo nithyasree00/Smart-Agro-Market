@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Agro Market - Login</title>
+  <style>
+    body {
+      font-family:Georgia,serif;
+      background: #f0fff0;
+      text-align: center;
+    }
+    h1 {
+      color:rgb(59, 174, 59);
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+    }
+    .box {
+      background-color:#ffffff;
+      color:rgb(27, 175, 35);
+      padding: 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 150px;
+      text-align: center;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    .box:hover {
+      background-color: rgb(27, 175, 35);
+      color:#ffffff;
+    }
+    .form-container {
+      display: none;
+      margin-top: 20px;
+    }
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 300px;
+      margin: auto;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    }
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid green;
+      border-radius: 5px;
+    }
+    button {
+      background: green;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: rgba(0, 100, 0, 0.648);
+      color:white;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Login</h1>
+
+  <div class="container">
+    <div class="box" onclick="showForm('adminForm')">Admin</div>
+    <div class="box" onclick="showForm('farmerForm')">Farmer</div>
+    <div class="box" onclick="showForm('customerForm')">Customer</div>
+    <div class="box" onclick="showForm('deliveryForm')">Delivery Person</div>
+  </div>
+
+  <!-- Admin Login -->
+<div id="adminForm" class="form-container">
+  <form onsubmit="return validateAdminForm(this)">
+    <h2>Admin Login</h2>
+    <input type="text" name="username" placeholder="Enter Username" required>
+    <input type="password" name="password" placeholder="Enter Password" required>
+    <button type="submit">Login</button>
+  </form>
+</div>
+
+
+  <!-- Farmer Login -->
+  <div id="farmerForm" class="form-container">
+    <form onsubmit="return validateForm(this)">
+      <h2>Farmer Login</h2>
+      <input type="text" name="name" placeholder="Enter Name" required>
+      <input type="text" name="mobile" placeholder="Enter Mobile Number" required>
+      <button type="submit">Login as Farmer</button>
+    </form>
+  </div>
+
+  <!-- Customer Login -->
+  <div id="customerForm" class="form-container">
+    <form onsubmit="return validateForm(this)">
+      <h2>Customer Login</h2>
+      <input type="text" name="name" placeholder="Enter Name" required>
+      <input type="text" name="mobile" placeholder="Enter Mobile Number" required>
+      <button type="submit">Login as Customer</button>
+    </form>
+  </div>
+
+  <!-- Delivery Boy Login -->
+  <div id="deliveryForm" class="form-container">
+    <form onsubmit="return validateForm(this)">
+      <h2>Delivery Person Login</h2>
+      <input type="text" name="name" placeholder="Enter Name" required>
+      <input type="text" name="mobile" placeholder="Enter Mobile Number" required>
+      <button type="submit">Login as Delivery Person</button>
+    </form>
+  </div>
+
+  <script>
+  function showForm(formId) {
+    document.querySelectorAll('.form-container').forEach(form => form.style.display = 'none');
+    document.getElementById(formId).style.display = 'block';
+  }
+
+  // Live input cleaning: only letters and spaces for name and username
+  document.querySelectorAll('input[name="name"], input[name="username"]').forEach(input => {
+    input.addEventListener('input', e => {
+      e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, '');
+    });
+  });
+
+  // Live input cleaning: only digits, max length 10 for mobile
+  document.querySelectorAll('input[name="mobile"]').forEach(input => {
+    input.addEventListener('input', e => {
+      e.target.value = e.target.value.replace(/\D/g, '').slice(0, 10);
+    });
+  });
+
+  function validateForm(form) {
+    let name = form.querySelector('input[name="name"]').value.trim();
+    let mobile = form.querySelector('input[name="mobile"]').value.trim();
+
+    let nameRegex = /^[A-Za-z\s]+$/;
+    let mobileRegex = /^[6-9]\d{9}$/;
+
+    if (!nameRegex.test(name)) {
+      alert("Name should contain only letters.");
+      return false;
+    }
+    if (!mobileRegex.test(mobile)) {
+      alert("Mobile number must be exactly 10 digits and start with 6, 7, 8, or 9.");
+      return false;
+    }
+    alert("Login successful!");
+    return true;
+  }
+
+  function validateAdminForm(form) {
+    let username = form.querySelector('input[name="username"]').value.trim();
+    let password = form.querySelector('input[name="password"]').value.trim();
+
+    let usernameRegex = /^[A-Za-z\s]+$/;
+
+    if (!usernameRegex.test(username)) {
+      alert("Username should contain only letters.");
+      return false;
+    }
+    if (password.length === 0) {
+      alert("Password cannot be empty.");
+      return false;
+    }
+    alert("Admin login successful!");
+    return true;
+  }
+</script>
+
+</body>
+</html>

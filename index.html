@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Smart Agro Market - Home</title>
+  <style>
+    body {
+      font-family:Georgia,serif;
+      background-color:rgba(182, 228, 168, 0.611);
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    .container {
+      padding: 70px;
+    }
+
+    h1 {
+      color:rgb(170, 86, 30);
+    }
+
+    img {
+      width: 300px;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    .button-container {
+      margin-top: 30px;
+    }
+
+    .btn {
+      background-color: #ffffff;
+      color: rgb(27, 175, 35);
+      padding: 14px 28px;
+      margin: 10px;
+      border: none;
+      cursor: pointer;
+      border-radius: 8px;
+      font-size: 16px;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn:hover {
+      background-color: rgb(27, 175, 35);
+      color:#ffffff;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <img src="Smart Agro Market Logo.png" alt="Smart Agro Market Logo">
+  
+    
+    <h1>Welcome to Our System</h1>
+    <div class="button-container">
+      <a href="#" class="btn" onclick="openSignup()">Signup</a>
+      <a href="#" class="btn" onclick="openLogin()">Login</a>
+    </div>
+  </div>
+
+  <script>
+    function openSignup() {
+      window.location.href = 'signup.html?v=' + new Date().getTime();
+    }
+
+    function openLogin() {
+      window.location.href = 'login.html?v=' + new Date().getTime();
+    }
+  </script>
+
+</body>
+</html>
