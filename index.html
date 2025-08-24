@@ -1,18 +1,28 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="en">
+<head >
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Smart Agro Market - Home</title>
   <style>
     body {
-      font-family:Georgia,serif;
-      background-color:rgba(182, 228, 168, 0.611);
-      margin: 0;
-      padding: 0;
-      text-align: center;
-    }
-
+  font-family: Georgia, serif;
+  background-color: rgba(182, 228, 168, 0.611);
+  text-align: center;
+  padding: 0;
+  margin: 0;   
+  width: 100vw; 
+  background-image: url("images/homeima.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode:initial;
+  justify-content: center;
+}
     .container {
       padding: 70px;
+      justify-content: center;
+      
     }
 
     h1 {
@@ -30,8 +40,8 @@
     }
 
     .btn {
-      background-color: #ffffff;
-      color: rgb(27, 175, 35);
+      background-color: rgba(249, 246, 246, 0.849);
+      color: #2a7c4f;
       padding: 14px 28px;
       margin: 10px;
       border: none;
@@ -46,19 +56,118 @@
       background-color: rgb(27, 175, 35);
       color:#ffffff;
     }
+    nav{
+        display:flex;
+        align-items: center;
+        justify-content:space-between;
+        background-color: rgb(85, 112, 103);
+        height: 40px;
+        padding:30px;
+        margin-top: 0px;
+
+            
+    }
+    nav img{
+      height:80px;
+      width: 80px;
+      border-radius: 50%;
+      background-color:rgba(133, 188, 168, 0.858) ;
+      margin-top: 20px;
+    }
+    nav ul{
+      list-style: none;
+      display:flex
+    }
+    li{
+      list-style: none;
+    }
+    .steps {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 25px;
+      margin-left: 40%;
+      padding: 40px 20px;
+      flex-direction: column;
+    }
+    .step {
+      background: rgba(255, 255, 255, 0.736);
+      border-radius: 15px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 220px;
+      padding: 20px;
+      transition: transform 0.3s ease;
+      display:flex;
+      flex-direction:column;
+    }
+    .step:hover {
+      transform: translateY(-8px);
+    }
+    .step i {
+      font-size: 40px;
+      color: rgb(27, 175, 35);
+      margin-bottom: 15px;
+    }
+    .step h3 {
+      color: rgb(75, 96, 89);
+      margin: 10px 0;
+    }
+    .step p {
+      font-size: 14px;
+      color: #555;
+    }
   </style>
 </head>
 <body>
+  <nav>
+    <div>
+      <img src="images/LogoSmart.png" alt="Smart Agro Logo">
+    </div>
+    <div>
+      <ul>
+        <li><a href="Login.html" class="btn">Login</a></li>
+        <li><a href="Signup.html" class="btn">Signup</a></li>
+      </ul>
+    </div>
+  </nav>
 
   <div class="container">
-    <img src="Smart Agro Market Logo.png" alt="Smart Agro Market Logo">
-  
-    
-    <h1>Welcome to Our System</h1>
-    <div class="button-container">
-      <a href="#" class="btn" onclick="openSignup()">Signup</a>
-      <a href="#" class="btn" onclick="openLogin()">Login</a>
+
+    <h1>Welcome to Smart Agro Market</h1>
+
+    <section class="steps">
+    <div class="step">
+      <i class="fas fa-user-plus"></i>
+      <h3>Signup / Login</h3>
+      <p>Create your account and login with credentials.</p>
     </div>
+
+    <div class="step">
+      <i class="fas fa-search"></i>
+      <h3> Browse Products</h3>
+      <p>Explore fresh farm produce directly from farmers.</p>
+    </div>
+
+    <div class="step">
+      <i class="fas fa-shopping-cart"></i>
+      <h3>Add to Cart</h3>
+      <p>Select products you want and add them to your cart.</p>
+    </div>
+
+    <div class="step">
+      <i class="fas fa-box"></i>
+      <h3>Place Order</h3>
+      <p>Confirm your order and choose delivery options.</p>
+    </div>
+
+    <div class="step">
+      <i class="fas fa-truck"></i>
+      <h3>Delivery</h3>
+      <p>Get fresh products delivered to your doorstep.</p>
+    </div>
+  </section>
+    
   </div>
 
   <script>
